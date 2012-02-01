@@ -1,5 +1,5 @@
 <?php
-require('../../config.php');
+require('../includes/config.php');
 include('chatFunctions.php');
 if(isset($_COOKIE['session_id'])) {
 

@@ -1,5 +1,5 @@
 <?php
-include('../config.php');
+include('includes/config.php');
 if(isset($_COOKIE['session_id'])) {
 	$session_id = $_COOKIE['session_id'];
 	$sql = "DELETE FROM online WHERE session_id='".$session_id."'";

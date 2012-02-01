@@ -1,5 +1,5 @@
 <?php
-require('../../config.php');
+require('../includes/config.php');
 if(isset($_COOKIE['session_id'])) {
 
         $session_id = $_COOKIE['session_id'];

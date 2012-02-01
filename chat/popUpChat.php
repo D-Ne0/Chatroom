@@ -1,5 +1,5 @@
 <?php
-require('../../config.php');
+require('../includes/config.php');
 header('Content-type: text/xml');
 if(isset($_COOKIE['session_id'])) {
 

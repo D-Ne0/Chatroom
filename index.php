@@ -1,5 +1,5 @@
 <?php
-require('../config.php');
+require('includes/config.php');
 
 if(isset($_COOKIE['session_id'])) {
 	$session_id = $_COOKIE['session_id'];
@@ -22,7 +22,7 @@ if(isset($_COOKIE['session_id'])) {
 <td>Password:</td> <td><input type="password" name="pass"></td>
 </tr>
 <tr>
-<td></td><td><input type="submit" name="login" value="login"></td>
+<td></td><td><input type="submit" name="login" value="login"> or <a href='reg.php'>SignUp</a></td>
 </tr>
 </form>
 </table>

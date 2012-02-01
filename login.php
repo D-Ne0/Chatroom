@@ -1,5 +1,5 @@
 <?php
-require('../config.php');
+require('includes/config.php');
 
 function back_to_login() {
 	header('Location: index.php');
