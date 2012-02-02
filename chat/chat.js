@@ -4,7 +4,7 @@ var noOfUsers;
 var username;
 var enroll;
 var chatRefreshTimer;
-var oldmsg = "";
+var newmsg="yes";
 var tabTitle = "Chatroom";
 
 $(document).ready(function(){
@@ -96,7 +96,7 @@ function chatWith(username,enroll) {
 		constructChatbox(enroll,username);
 		startChatSession(enroll);
 		clearInterval(chatRefreshTimer);	
-		oldmsg="";
+		newmsg="yes";
 		getChat(enroll);
 		chatRefreshTimer = setInterval("getChat("+enroll+")",1500);
 	}
@@ -154,7 +154,7 @@ function restructChatbox(roll,name) {
 	$("div#chatbox_"+roll).css({"position":"relative","top":"0px"});
 	$("div#chatbox_"+roll+" div.chatbox_text input").focus();
 	clearInterval(chatRefreshTimer);
-	oldmsg = "";
+	newmsg="yes";
 	getChat(roll);
 	chatRefershTimer = setInterval("getChat("+roll+")",1500);
 }
@@ -178,13 +178,14 @@ function sendChat(roll,name) {
 					$("div#chatbox_"+roll+" div.chatbox_msg").empty();
 					$("div#chatbox_"+roll+" div.chatbox_msg").html("<div class='err_msg'>"+name+" is unavailable</div>");
 				}
-				else
+				else{
+					newmsg="yes";
 					getChat(roll);
+				}
 			}
 		});
 	}
 	$("div#chatbox_"+roll+" div.chatbox_text input").val("");
-	oldmsg="";
 
 	return false;
 }
@@ -192,7 +193,6 @@ function sendChat(roll,name) {
 function getChat(roll) {
 
 	var str = "action=getChat&roll="+roll;
-	var newmsg;
 	var user;
 
 	$.ajax({url:"processRequest.php", type:"POST", data:""+str+"", dataType:"xml",success:function(result) {
@@ -215,20 +215,18 @@ function getChat(roll) {
 				$("div#chatbox_"+roll+" div.chatbox_msg").prepend("<div class='msg_container'><div id='sender'><b>"+user+"</b>: "+msg+"</div><br>");
 
 			});
-	
+			//alert(newmsg);
+			if(newmsg=="yes") {
+			$("div#chatbox_"+roll+" div.chatbox_msg").scrollTop($("div#chatbox_"+roll+" div.chatbox_msg")[0].scrollHeight);
+                        $("div#chatbox_"+roll+" div.chatbox_text input").focus();	
+			}
 		}	
 	
 		else {
 			$("div#chatbox_"+roll+" div.chatbox_msg").empty();
 			$("div#chatbox_"+roll+" div.chatbox_msg").html("<div class='err_msg'>Start your conversation</div>");
 		}
-		newmsg = $(result).find("msg").eq(0).text();
-		if(oldmsg!=newmsg) {
-	
-			$("div#chatbox_"+roll+" div.chatbox_msg").scrollTop($("div#chatbox_"+roll+" div.chatbox_msg")[0].scrollHeight);
-			$("div#chatbox_"+roll+" div.chatbox_text input").focus();
-		}
-		oldmsg = newmsg;
+		
 	}});
 
 }
@@ -245,7 +243,7 @@ function refreshPopUpChat() {
 				$(result).find("users").each(function(){ 
 					var name = $(this).find("name").text();
 					var roll = $(this).find("roll").text();
-					//alert(name);
+					//newmsg="yes";
 					if($("div#chatbox_"+roll).length==0)
 						chatWith(name,roll);
 					else 
@@ -257,12 +255,15 @@ function refreshPopUpChat() {
 					}
 					else{
 						$("div#chatbox_"+roll).show();
-						oldmsg="";
+						newmsg="yes";
 						getChat(roll);
 						chatRefreshTimer = setInterval("getChat("+roll+")",1500);
 					}
+					//newmsg="no";
 				});
 			}
+			else
+				newmsg="no";
 			}
 		});	
 }
