@@ -1,14 +1,17 @@
 <?php
 $err = $_GET['err'];
 $err_msg = "";
-switch($err) {
-	case 0: $err_msg = "Incomplete form";
-		break;
-	case 1: $err_msg = "Passwords donot match";
-		break;
-	case 2: $err_msg = "Already registered or try different username";
-		break;
-	default:break;
+if($err!="") {
+	switch($err) {
+		case 0: $err_msg = "Incomplete form";
+			break;
+		case 1: $err_msg = "Passwords donot match";
+			break;
+		case 2: $err_msg = "Already registered or try different username";
+			break;
+		default:$err_msg = "";
+			break;
+	}
 }
 ?>
 <html>

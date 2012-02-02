@@ -44,7 +44,7 @@ function refreshOnline() {
                 $.ajax({url:"show_online.php", type:"POST", data:""+str+"", success:function(result){
                         $("div#online_users_box").html(result);
                         noOfUsers = $("div#user").toArray();
-                        $("div#online_title").html("Who's Online ("+noOfUsers.length+")");
+                        $("div#online_title").html("Search Results ("+noOfUsers.length+")");
                         }
                 });
         }
@@ -52,10 +52,7 @@ function refreshOnline() {
                 $.ajax({url:"show_online.php", success:function(result){
                 $("div#online_users_box").html(result);
                 noOfUsers = $("div#user").toArray();
-                if(noOfUsers.length==0)
-                        $("div#online_title").html("No one is Online");
-                else
-                        $("div#online_title").html("Who's Online ("+noOfUsers.length+")");
+                $("div#online_title").html("Who's Online ("+noOfUsers.length+")");
                 }});
         }
 
