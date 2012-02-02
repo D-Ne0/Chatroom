@@ -80,14 +80,6 @@ function setOnlineStatus(onlineStatus) {
 		$.ajax({url:"processRequest.php", type:"POST", data:""+str+""});
 }
 
-function searchUsersOnline() {
-
-	var str = $("div#online_search_box input").val();
-	if(str.len!=0) {
-		
-	}		
-}
-
 function chatWith(username,enroll) {
 	
 	minimizeAllChats();
