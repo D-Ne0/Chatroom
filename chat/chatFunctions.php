@@ -86,11 +86,11 @@ function getChat($to_enroll,$enroll) {
 		$msg = $row['msg'];
 		$i=0;
 		$msg = htmlentities($msg);
-	        $smileys = array(":)",":-)",":P",":p",":D",":O",":(","&lt;/3","&lt;3",";)");
-        	$smileys_path = array("smile.png","regular_smile.gif","tongue_smile.gif","tongue_smile.gif","laugh.jpg","omg_smile.gif","sad.gif","broken_heart.gif","heart.gif","wink.png");
+	        $smileys = array(":)",":-)",":p",":D",":O",":(","&lt;/3","&lt;3",";)","rofl");
+        	$smileys_path = array("smile.png","regular_smile.gif","tongue_smile.gif","laugh.jpg","omg_smile.gif","sad.gif","broken_heart.gif","heart.gif","wink.png","rofl.gif");
         	$const_path = "../images/smileys/";
         	foreach($smileys as $val) {
-                	$msg = str_replace($val,"&lt;img src='".$const_path.$smileys_path[$i]."' width='17' height='17' /&gt;",$msg);
+                	$msg = str_ireplace($val,"&lt;img src='".$const_path.$smileys_path[$i]."' width='17' height='17' /&gt;",$msg);
                 	$i++;
         	}
 
