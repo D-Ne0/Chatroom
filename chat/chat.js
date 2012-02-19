@@ -5,7 +5,7 @@ var username;
 var enroll;
 var chatRefreshTimer;
 var newmsg="yes";
-var tabTitle = "Chatroom";
+var browserTitle = "Chatroom";
 var soundHandle;
 var soundFile = "../sound/notify.mp3";
 var soundFile1 = "../sound/notify.ogg"; 
@@ -17,7 +17,7 @@ $(document).ready(function(){
 		$("div#online_search_box input").val("");
 	});
   $(window).focus(function(){
- 	$("title").text(tabTitle);
+ 	$("title").text(browserTitle);
   });
 });
 
@@ -101,8 +101,8 @@ function chatWith(username,enroll) {
 		startChatSession(enroll);
 		clearInterval(chatRefreshTimer);	
 		newmsg="yes";
-		getChat(enroll);
-		chatRefreshTimer = setInterval("getChat("+enroll+")",1500);
+		getChat(enroll,username);
+		chatRefreshTimer = setInterval("getChat("+enroll+","+username+")",1500);
 	}
 	else {
 	restructChatbox(enroll,username);
@@ -159,8 +159,8 @@ function restructChatbox(roll,name) {
 	$("div#chatbox_"+roll+" div.chatbox_text input").focus();
 	clearInterval(chatRefreshTimer);
 	newmsg="yes";
-	getChat(roll);
-	chatRefershTimer = setInterval("getChat("+roll+")",1500);
+	getChat(roll,name);
+	chatRefershTimer = setInterval("getChat("+roll+","+name+")",1500);
 }
 
 function startChatSession(roll) {
@@ -184,7 +184,7 @@ function sendChat(roll,name) {
 				}
 				else{
 					newmsg="yes";
-					getChat(roll);
+					getChat(roll,name);
 				}
 			}
 		});
@@ -194,7 +194,7 @@ function sendChat(roll,name) {
 	return false;
 }
 
-function getChat(roll) {
+function getChat(roll,name) {
 
 	var str = "action=getChat&roll="+roll;
 	var user;
@@ -219,11 +219,11 @@ function getChat(roll) {
 				$("div#chatbox_"+roll+" div.chatbox_msg").prepend("<div class='msg_container'><div id='sender'><b>"+user+"</b>: "+msg+"</div><br>");
 
 			});
-			//alert(newmsg);
+
 			if(newmsg=="yes") {
 				$("div#chatbox_"+roll+" div.chatbox_msg").scrollTop($("div#chatbox_"+roll+" div.chatbox_msg")[0].scrollHeight);
 				if($("div#chatbox_"+roll+" div.chatbox_text input").is(":focus")==false) {
-					$("title").text(user+" says...");
+					setBrowserTitle(name);
 					playSound();
 	                	        $("div#chatbox_"+roll+" div.chatbox_text input").focus();	
 				}
@@ -252,13 +252,15 @@ function refreshPopUpChat() {
 				$(result).find("users").each(function(){ 
 					var name = $(this).find("name").text();
 					var roll = $(this).find("roll").text();
-					//newmsg="yes";
+				
 					if($("div#chatbox_"+roll).length==0) {
+						setBrowserTitle(name);
 						playSound();
 						chatWith(name,roll);
 					}
 					else 
 					if($("div#chatbox_"+roll).css("top")=="205px"){
+						setBrowserTitle(name);
 						playSound();
 						$("div#chatbox_"+roll).show();
 						$("div#chatbox_"+roll+" div.chatbox_title").css("background-color","#99C");
@@ -267,10 +269,10 @@ function refreshPopUpChat() {
 					else{
 						$("div#chatbox_"+roll).show();
 						newmsg="yes";
-						getChat(roll);
-						chatRefreshTimer = setInterval("getChat("+roll+")",1500);
+						getChat(roll,name);
+						chatRefreshTimer = setInterval("getChat("+roll+","+name+")",1500);
 					}
-					//newmsg="no";
+			
 				});
 			}
 			else
@@ -298,6 +300,10 @@ function playSound() {
   soundHandle.src = soundFile1;  // for firefox and opera ogg
   soundHandle.play();	
 
+}
+
+function setBrowserTitle(name) {
+	document.title=name+" says...";
 }
 
 function hello() {
