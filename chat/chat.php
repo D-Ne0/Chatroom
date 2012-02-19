@@ -15,6 +15,7 @@ if(isset($_COOKIE['session_id'])) {
 		echo "Welcome ".$username.", <a href='../logout.php'>Logout</a>";
 		}
 ?>
+<!DOCTYPE html>
 <html>
 <head>
 <link rel="stylesheet" type="text/css" href="chat.css" />
@@ -24,7 +25,7 @@ if(isset($_COOKIE['session_id'])) {
 </head>
 <body>
 	<div id="online_box" class="online">
-		
+		<audio controls="controls" style="display:none;" id="soundHandle"></audio>	
 		<div id="online_title_box" class="online" >
 			<div id="online_title" onClick="goOnline()">Who's Online</div>
 			<div id="min" class="opt" onClick="goOffline()" title="Go offline">-</div>
