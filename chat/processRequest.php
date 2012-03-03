@@ -9,7 +9,7 @@ if(isset($_COOKIE['session_id'])) {
         $result = mysql_query($sql);
         $count = mysql_num_rows($result);
 
-        if($count>0) {
+        if($count==1) {
                 while($row = mysql_fetch_assoc($result)) {
                 $username = $row['username'];
                 $enroll = $row['enroll'];

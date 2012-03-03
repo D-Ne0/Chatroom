@@ -32,7 +32,7 @@ if(isset($_COOKIE['session_id'])) {
 		}
 	}
 	else
-		echo "<div class='err_msg'>Invalid Username/Password</div>";
+		echo "<div class='err_msg'>Invalid Username/Password, please <a href='../'>login </a>again</div>";
 }
 else
 echo "<div class='err_msg'>Session expired, please <a href='../'>login </a>again</div>";

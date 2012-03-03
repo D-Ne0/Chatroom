@@ -23,7 +23,7 @@ function setOnlineStatus($enroll,$status) {
 
 function sendChat($to_enroll,$to_user,$msg,$enroll,$username) {
 
-	$t=time()-180;
+	$t=time()-180;   // time to be used to check if the message can be concatinated.
 	$i=0;
 	$msg = htmlentities($msg);
 	$msg = mysql_real_escape_string($msg); 	

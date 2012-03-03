@@ -8,7 +8,7 @@ if(isset($_COOKIE['session_id'])) {
 	$result = mysql_query($sql);
 	$count = mysql_num_rows($result);
 
-	if($count>0) {
+	if($count==1) {
 		while($row = mysql_fetch_assoc($result)) {
 		$username = $row['username'];
 		$enroll = $row['enroll'];
@@ -25,7 +25,7 @@ if(isset($_COOKIE['session_id'])) {
 </head>
 <body>
 	<div id="online_box" class="online">
-		<audio controls="controls" style="display:none;" id="soundHandle"></audio>	
+		<audio controls="controls" style="display:none;" id="soundHandle"></audio>  //this tag is for chat sound	
 		<div id="online_title_box" class="online" >
 			<div id="online_title" onClick="goOnline()">Who's Online</div>
 			<div id="min" class="opt" onClick="goOffline()" title="Go offline">-</div>
