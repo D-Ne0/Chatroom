@@ -17,15 +17,13 @@ $(document).ready(function(){
 		$("div#online_search_box input").val("");
 	});
   $(window).focus(function(){
- 	$("title").text(browserTitle);
+ 	document.title = browserTitle;
   });
 });
 
-function showOnline() {
-	
+function showOnline() {	
 	var str = "action=checkMyOnlineStatus";
 	$.ajax({url:"processRequest.php", type:"POST", dataType:"xml", data:""+str+"", success:function(result){
-
 				var onlineStatus = $(result).find("root").attr("online");
 				if(onlineStatus=="yes") {
 					$("div#online_users_box").html("Loading...");
@@ -39,8 +37,7 @@ function showOnline() {
 		});
 }
 
-function refreshOnline() {
-	
+function refreshOnline() {	
 	var search = $("div#online_search_box input").val();
         if(search.length!=0 && search!="Search") {
                 var str = "search="+search;
@@ -246,7 +243,8 @@ function popUpChat() {
 }
 
 function refreshPopUpChat() {
-	$.ajax({url:"popUpChat.php", dataType:"xml", success:function(result){
+	var str = "action=popUpChat";
+	$.ajax({url:"processRequest.php", type:"POST", data:""+str+"", dataType:"xml", success:function(result){
 			var c = $(result).find("root").attr("count");
 			if(c>0) {
 				$(result).find("users").each(function(){ 

@@ -1,13 +1,7 @@
 <?php
-require('includes/config.php');
-
-if(isset($_COOKIE['session_id'])) {
-	$session_id = $_COOKIE['session_id'];
-	$sql = "SELECT null from online WHERE session_id='".$session_id."' LIMIT 1";
-	$result = mysql_query($sql);
-	$count = mysql_num_rows($result);
-	if($count==1)
-	header('location:chat/chat.php');
+require('includes/init.php');
+if(check_login()==true){
+	header('location: chat/chat.php');
 }
 ?>
 

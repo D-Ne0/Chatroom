@@ -1,19 +1,11 @@
 <?php
-require('../includes/config.php');
-if(isset($_COOKIE['session_id'])) {
-	
-	$session_id = $_COOKIE['session_id'];
-	
-	$sql = "SELECT username,enroll FROM online WHERE session_id='".$session_id."' LIMIT 1";
-	$result = mysql_query($sql);
-	$count = mysql_num_rows($result);
-
-	if($count==1) {
-		while($row = mysql_fetch_assoc($result)) {
-		$username = $row['username'];
-		$enroll = $row['enroll'];
-		echo "Welcome ".$username.", <a href='../logout.php'>Logout</a>";
-		}
+require('../includes/init.php');
+if(!check_login())
+	header('location: ../index.php');
+else {
+	$username = get_username();
+	$enroll = get_enroll();
+	echo "Welcome ".$username.", <a href='../logout.php'>Logout</a>";
 ?>
 <!DOCTYPE html>
 <html>
@@ -25,7 +17,7 @@ if(isset($_COOKIE['session_id'])) {
 </head>
 <body>
 	<div id="online_box" class="online">
-		<audio controls="controls" style="display:none;" id="soundHandle"></audio>  //this tag is for chat sound	
+		<audio controls="controls" style="display:none;" id="soundHandle"></audio>  <!--this tag is for chat sound	-->
 		<div id="online_title_box" class="online" >
 			<div id="online_title" onClick="goOnline()">Who's Online</div>
 			<div id="min" class="opt" onClick="goOffline()" title="Go offline">-</div>
@@ -44,12 +36,5 @@ if(isset($_COOKIE['session_id'])) {
 </body>
 </html>
 <?php
-
-	}
-
-	else
-	header('Location: ../index.php');
 }
-else
-header('Location: ../index.php');
 ?>

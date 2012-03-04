@@ -6,18 +6,15 @@ function startChatSession($to_roll,$enroll) {
 }
 
 function checkMyOnlineStatus($enroll) {
-	$sql = "SELECT online FROM online WHERE enroll=".$enroll." LIMIT 1";
+	$sql = "SELECT online FROM stud_data WHERE usr_roll=".$enroll." LIMIT 1";
 	$result = mysql_query($sql);
 	while($row = mysql_fetch_assoc($result)) {
-		if($row['online']=="yes")
-			echo "<root online='yes'><roll>".$enroll."</roll></root>";
-		else
-			echo "<root online='no'><roll>".$enroll."</roll></root>";
+		echo "<root online='".$row['online']."'><roll>".$enroll."</roll></root>";
 	}
 }
 
 function setOnlineStatus($enroll,$status) {
-	$sql = "UPDATE online SET online='".$status."' WHERE enroll=".$enroll;
+	$sql = "UPDATE stud_data SET online='".$status."' WHERE usr_roll=".$enroll;
 	mysql_query($sql);
 }
 
@@ -28,7 +25,7 @@ function sendChat($to_enroll,$to_user,$msg,$enroll,$username) {
 	$msg = htmlentities($msg);
 	$msg = mysql_real_escape_string($msg); 	
 	
-	$sql = "SELECT null FROM online WHERE enroll=".$enroll." AND online='yes' LIMIT 1";
+	$sql = "SELECT null FROM stud_data WHERE usr_roll=".$enroll." AND online='yes' LIMIT 1";
 	$result = mysql_query($sql);
 	$count = mysql_num_rows($result);
 	if($count==0)
@@ -121,5 +118,17 @@ function setWritingStatus($enroll,$s) {
 		$sql = "INSERT INTO user_status (enroll,writing,time) VALUES (".$enroll.", '".$s."', ".time().")";
 		mysql_query($sql);
 	}
+}
+
+function popUpChat($enroll) {
+	$t = time()-3;
+        $sql = "SELECT from_enroll,from_user,msg FROM chat_messages WHERE to_enroll=".$enroll." AND time>=".$t." ORDER BY msg_id DESC";
+        $res = mysql_query($sql);
+        $c = mysql_num_rows($res);
+        echo "<root count='".$c."'>";
+        while($r = mysql_fetch_assoc($res)) {
+                echo "<users><name>".$r['from_user']."</name><roll>".$r['from_enroll']."</roll></users>";
+        }
+        echo "</root>";
 }
 ?>

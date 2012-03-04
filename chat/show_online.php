@@ -1,39 +1,28 @@
 <?php
-require('../includes/config.php');
-if(isset($_COOKIE['session_id'])) {
+require('../includes/init.php');
+if(check_login()==true) {
 
-        $session_id = $_COOKIE['session_id'];
-
-        $sql = "SELECT username,enroll FROM online WHERE session_id='".$session_id."' LIMIT 1";
-        $result = mysql_query($sql);
-        $count = mysql_num_rows($result);
-
-        if($count>0) {
-                while($row = mysql_fetch_assoc($result)) {
-                $username = $row['username'];
-                $enroll = $row['enroll'];
-                //echo $username." ".$enroll;
-                }
+	$enroll = get_enroll();
 	$search = $_POST['search'];
-	$sql = "UPDATE online SET time=".time()." WHERE session_id='".$session_id."' AND enroll=".$enroll;
+
+	//updating the time
+	$sql = "UPDATE stud_data SET time=".time()." WHERE usr_roll=".$enroll;
 	mysql_query($sql);
 	
+	// getting online users
 	$time = time()-3;
 	if($search=="")
-	$sql = "SELECT username, enroll FROM online WHERE time>=".$time." AND enroll<>".$enroll." AND online='yes'";
+	$sql = "SELECT usr_name, usr_roll FROM stud_data WHERE time>=".$time." AND usr_roll<>".$enroll;
 	else
-	$sql = "SELECT username, enroll FROM online WHERE time>=".$time." AND enroll<>".$enroll." AND online='yes' AND UCASE(username) LIKE'%".strtoupper($search)."%'";
+	$sql = "SELECT usr_name, usr_roll FROM stud_data WHERE time>=".$time." AND usr_roll<>".$enroll." AND online='yes' AND UCASE(usr_name) LIKE'%".strtoupper($search)."%'";
 	$result = mysql_query($sql);
 	$count = mysql_num_rows($result);
 		if($count>0) {
 			while($row = mysql_fetch_assoc($result)) {
-			echo "<div id='user' onclick='javascript:chatWith(&#39;".$row['username']."&#39;,".$row['enroll'].")'>".$row['username']."</div>";
+			echo "<div id='user' onclick='javascript:chatWith(&#39;".$row['usr_name']."&#39;,".$row['usr_roll'].")'>".$row['usr_name']."</div>";
 			}
 		}
-	}
-	else
-		echo "<div class='err_msg'>Invalid Username/Password, please <a href='../'>login </a>again</div>";
 }
 else
-echo "<div class='err_msg'>Session expired, please <a href='../'>login </a>again</div>";
+	echo "<div class='err_msg'>Invalid Username/Password, please <a href='../'>login </a>again</div>";
 ?>
