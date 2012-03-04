@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Feb 02, 2012 at 06:51 PM
+-- Generation Time: Mar 04, 2012 at 04:01 PM
 -- Server version: 5.1.58
 -- PHP Version: 5.3.6-13ubuntu3.3
 
@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS `chat_messages` (
   `msg` text NOT NULL,
   `time` bigint(14) NOT NULL,
   PRIMARY KEY (`msg_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=69 ;
 
 -- --------------------------------------------------------
 
@@ -50,22 +50,7 @@ CREATE TABLE IF NOT EXISTS `chat_session` (
   `to_enroll` int(8) NOT NULL,
   PRIMARY KEY (`chat_id`),
   KEY `to_user` (`to_enroll`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `online`
---
-
-CREATE TABLE IF NOT EXISTS `online` (
-  `session_id` text NOT NULL,
-  `username` varchar(30) NOT NULL,
-  `enroll` int(8) NOT NULL,
-  `time` bigint(18) NOT NULL,
-  `online` varchar(3) NOT NULL DEFAULT 'no',
-  KEY `username` (`username`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=21 ;
 
 -- --------------------------------------------------------
 
@@ -78,8 +63,10 @@ CREATE TABLE IF NOT EXISTS `stud_data` (
   `usr_name` varchar(25) NOT NULL,
   `usr_roll` int(10) NOT NULL,
   `usr_pass` varchar(36) NOT NULL,
+  `online` varchar(3) NOT NULL,
+  `time` bigint(18) NOT NULL COMMENT 'this time get updated via script show_online.php when the user is online',
   UNIQUE KEY `id` (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
 
 -- --------------------------------------------------------
 
@@ -94,7 +81,7 @@ CREATE TABLE IF NOT EXISTS `user_status` (
   `time` bigint(20) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `enroll` (`enroll`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
