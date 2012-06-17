@@ -1,11 +1,15 @@
-Chatroom is a basic chat application in php. 
-It is a pull application ie. refreshes users online(2.5 s) and chat messages(1.5 s) after certain fixed interval.
+<p>Chatroom is a basic chat application in php. <br>
+It is a pull application ie. refreshes users online and chat messages after certain fixed interval.</p>
 
-Features: 
-Chatbox color changes if chatbox is minimized during a new chat message.
-Search users online.
-Smileys used.
-Chat sound when user is not on chat window.
+<h3>Features:</h3> 
+<ul>
+<li>Chatbox color changes if chatbox is minimized during a new chat message.</li>
+<li>Search users online.</li>
+<li>Smileys used.</li>
+<li>Chat sound when user is not on chat window.</li>
+</ul>
 
-Scope:
-Chat sound when user is not on chat window.Supported in all major browsers except IE (design problem).
+<h3>Scope:</h3>
+<ul>
+<li>Supported in all major browsers except IE (design problem).</li>
+</ul>
